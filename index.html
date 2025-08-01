@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Halaman Ulang Tahun Meriah</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      color: white;
+      text-align: center;
+    }
+
+    .card {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      border: 3px solid transparent;
+      transition: border 0.5s ease;
+      overflow: hidden;
+      width: 300px;
+      max-width: 90vw;
+      height: 300px;
+    }
+
+    .glow-border {
+      animation: borderGlow 1s forwards;
+    }
+
+    @keyframes borderGlow {
+      0% {
+        border-color: transparent;
+        box-shadow: 0 0 0 rgba(255,255,255,0);
+      }
+      100% {
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255,255,255,0.7);
+      }
+    }
+
+    h1, p {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.5s forwards;
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #333;
+      transition: transform 0.1s ease, background 0.3s ease;
+      margin-top: 20px;
+    }
+
+    button:active {
+      transform: scale(1.1);
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      opacity: 0.8;
+      animation: confetti-fall 2.5s linear forwards;
+      border-radius: 2px;
+      top: -20px; /* muncul dari lebih atas */
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(320px) rotate(360deg); /* jatuh ke bawah */
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1 id="judul">Selamat Datang!</h1>
+    <p id="deskripsi">Senang Menghibur Anda 😊.</p>
+    <button onclick="ubahTeks()">Tekan Saya</button>
+  </div>
+
+  <audio controls autoplay>
+  <source src="Jamrud - Selamat Ulang Tahun (Official Lyric Video) - Logiss Records.mp3" type="audio/mpeg">
+  Browser Anda tidak mendukung pemutar audio.
+  </audio>
+
+
+
+  <script>
+    function ubahTeks() {
+      const judul = document.getElementById("judul");
+      const deskripsi = document.getElementById("deskripsi");
+      const card = document.getElementById("card");
+
+      // Efek keluar
+      judul.classList.add("fade-out");
+      deskripsi.classList.add("fade-out");
+
+      // Efek border
+      card.classList.remove("glow-border");
+      void card.offsetWidth;
+      card.classList.add("glow-border");
+
+      // Ganti teks setelah animasi keluar
+      setTimeout(() => {
+        judul.textContent = "🎉 Selamat Ulang Tahun!";
+        deskripsi.textContent = "Selamat ulang tahun🤩, saudaraku tercinta🤗. Semoga hari-harimu selalu dipenuhi kebahagiaan😂, kesehatan😊, dan keberkahan😇. Terima kasih sudah menjadi bagian penting dalam hidupku. Tetaplah menjadi pribadi hebat yang selalu aku banggakan🙏.";
+
+        judul.classList.remove("fade-out");
+        deskripsi.classList.remove("fade-out");
+        void judul.offsetWidth;
+        void deskripsi.offsetWidth;
+
+        judul.classList.add("fade-in-up");
+        deskripsi.classList.add("fade-in-up");
+
+        setTimeout(() => {
+          judul.classList.remove("fade-in-up");
+          deskripsi.classList.remove("fade-in-up");
+        }, 1000);
+      }, 500);
+
+      // Buat konfeti di dalam .card
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "%";
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.animationDuration = (Math.random() * 1.5 + 1.5) + "s";
+
+        card.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 3000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>
